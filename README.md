@@ -1,5 +1,22 @@
 # NOTIS voor iPhone
 
+> **Dit is de store-versie van NOTIS voor iPhone** (App Store, versie 1.0.0).
+> Hij is gelijk aan [notis-ios](https://github.com/NOTIS-app/notis-ios), met de school uitgezet:
+>
+> | Vlag (`Foqos/Notis/FeatureFlags.swift`) | Hier | Wat het doet |
+> |---|---|---|
+> | `schools` | `false` | Geen school-, lokaal- of docentfuncties, geen verborgen beheerderslogin. Een schoolsteen wordt geweigerd. |
+> | `parentControls`, `anonymousParents` | `true` | Ouders blijven: anoniem account en de status van het kind. |
+>
+> Database, migraties en code blijven ongewijzigd. School terug in een update = `schools = true`, privacyteksten en App Privacy bijwerken, nieuwe build.
+> De app vraagt een NFC-lezer (`UIRequiredDeviceCapabilities`), dus hij is niet te installeren op iPads.
+>
+> **Builds:** het buildnummer is `github.run_number` van déze repo; App Store Connect wil per versie een steeds hoger nummer. Bouw je later weer vanuit `notis-ios`, verhoog dan eerst de versie (bijv. 1.1.0).
+> **CI:** zet in deze repo opnieuw de secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8`, `APPLE_TEAM_ID` en maak hem openbaar (gratis macOS-minuten).
+> **Upgraden vanuit de volledige repo:** `git fetch full && git merge full/main`, daarna de vlaggen hierboven controleren.
+> Teksten voor de store en de formulieren: `C:\NOTIS\store-lancering\`.
+
+
 NOTIS helpt leerlingen focussen in de les. Bij binnenkomst tikt een leerling met de telefoon
 op de NOTIS-steen van het lokaal; de telefoon gaat dan op slot, met alleen de apps die de school
 toestaat. Na de les ontgrendelt de leerling op dezelfde steen. De docent ziet wie er in het lokaal

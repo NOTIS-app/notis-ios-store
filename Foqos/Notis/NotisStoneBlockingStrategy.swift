@@ -53,7 +53,7 @@ class NotisStoneBlockingStrategy: BlockingStrategy {
         self.lock(context: context, stone: profile, tag: tag.id)
         return
       }
-      if FeatureFlags.rooms {
+      if FeatureFlags.rooms && FeatureFlags.schools {
         self.scanUnknownStoneWhileFree(uid: tag.id, seal: tag.seal, context: context)
         return
       }
@@ -98,7 +98,7 @@ class NotisStoneBlockingStrategy: BlockingStrategy {
   ) -> (any View)? {
     prepareScanner()
     nfcScanner.onTagScanned = { tag in
-      if FeatureFlags.rooms, self.scanSchoolStoneWhileLocked(uid: tag.id, session: session, context: context) {
+      if FeatureFlags.rooms, FeatureFlags.schools, self.scanSchoolStoneWhileLocked(uid: tag.id, session: session, context: context) {
         return
       }
       // Only the room's stone ends a school lock; own stones don't (that would be a way out).

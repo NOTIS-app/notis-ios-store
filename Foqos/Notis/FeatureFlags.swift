@@ -44,6 +44,14 @@ enum FeatureFlags {
   /// who is locked. Mirrors `FeatureFlags.ROOMS` on Android. Replaces `schoolLive`'s classes.
   static let rooms = true
 
+  /// Everything for schools: joining a school by tapping one of its stones, rooms, teachers
+  /// ("Ik ben docent", the onboarding page about teachers) and the hidden NOTIS admin login.
+  /// Off for the first App Store version, which only has own stones and parents; the code, the
+  /// database and `rooms` stay as they are, so a later update only turns this back on. Off, a
+  /// school stone is refused like any stone that isn't an own NOTIS stone.
+  /// Mirrors `FeatureFlags.SCHOOLS` on Android.
+  static let schools = false
+
   /// Only NOTIS stones: an own stone pairs only with a valid seal of a personal stone
   /// ([StoneSeal]). Stones paired before keep working. Off: any NFC chip pairs, as before. A
   /// school stone never pairs as an own stone, with or without this flag.

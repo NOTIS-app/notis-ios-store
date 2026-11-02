@@ -21,7 +21,8 @@ struct NotisOnboardingView: View {
     case .apps: return FeatureFlags.onboardingApps
     case .pairing: return FeatureFlags.onboardingPairing || FeatureFlags.onboardingPairLater
     case .parents: return FeatureFlags.onboardingRoles && FeatureFlags.parentControls && SchoolBackend.isAvailable
-    case .teachers: return FeatureFlags.onboardingRoles && FeatureFlags.rooms && SchoolBackend.isAvailable
+    case .teachers:
+      return FeatureFlags.onboardingRoles && FeatureFlags.rooms && FeatureFlags.schools && SchoolBackend.isAvailable
     default: return true
     }
   }
@@ -181,7 +182,7 @@ struct NotisOnboardingView: View {
       HStack(alignment: .top, spacing: 8) {
         Image(systemName: "info.circle")
           .foregroundStyle(NotisBrand.inkSoft)
-        Text("Je geeft de toestemming zelf, in een venster van Apple. Er worden geen gegevens verzameld.")
+        Text("Je geeft de toestemming zelf, in een venster van Apple. Wat NOTIS via Schermtijd ziet, blijft op je telefoon.")
           .font(.satoshi(13))
           .foregroundStyle(NotisBrand.inkSoft)
       }

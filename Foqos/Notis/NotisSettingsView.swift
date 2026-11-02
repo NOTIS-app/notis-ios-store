@@ -93,7 +93,7 @@ struct NotisSettingsView: View {
 
           // Same layout as Android: OUDERS & SCHOOL (StudentClassCard), then the account.
           if FeatureFlags.rooms {
-            Text("OUDERS & SCHOOL")
+            Text(FeatureFlags.schools ? "OUDERS & SCHOOL" : "OUDERS")
               .font(.satoshi(12, .bold))
               .tracking(1)
               .foregroundStyle(NotisBrand.inkSoft)
@@ -431,13 +431,15 @@ struct NotisSettingsView: View {
                 "Voor ouders: log in of maak een account en voeg je kind toe met de code van Ouder koppelen. Je ziet live of je kind op slot zit en kiest bij een Android-telefoon welke apps het mag gebruiken."
             )))
       }
-      items.append(
-        NotisHelpItem(
-          icon: "graduationcap", title: String(localized: "Ik ben docent"),
-          body: String(
-            localized:
-              "Voor docenten: log in met het account dat je van NOTIS krijgt. Tik op de steen van je lokaal en je ziet live wie er op slot zit."
-          )))
+      if FeatureFlags.schools {
+        items.append(
+          NotisHelpItem(
+            icon: "graduationcap", title: String(localized: "Ik ben docent"),
+            body: String(
+              localized:
+                "Voor docenten: log in met het account dat je van NOTIS krijgt. Tik op de steen van je lokaal en je ziet live wie er op slot zit."
+            )))
+      }
     }
     items.append(
       NotisHelpItem(
@@ -485,7 +487,7 @@ struct NotisSettingsView: View {
   }
 
   private func tapAbout() {
-    guard FeatureFlags.rooms, !teacher.isSignedIn else { return }
+    guard FeatureFlags.rooms, FeatureFlags.schools, !teacher.isSignedIn else { return }
     let now = Date()
     aboutTaps = now.timeIntervalSince(lastAboutTap) < 1.5 ? aboutTaps + 1 : 1
     lastAboutTap = now
@@ -553,12 +555,14 @@ struct NotisSettingsView: View {
             }
           )
         }
-        SettingsRow(
-          icon: "person.crop.square",
-          title: String(localized: "Ik ben docent"),
-          subtitle: FeatureFlags.lessText ? nil : String(localized: "Log in om je lokaal te zien"),
-          action: { loginRole = .teacher }
-        )
+        if FeatureFlags.schools {
+          SettingsRow(
+            icon: "person.crop.square",
+            title: String(localized: "Ik ben docent"),
+            subtitle: FeatureFlags.lessText ? nil : String(localized: "Log in om je lokaal te zien"),
+            action: { loginRole = .teacher }
+          )
+        }
       }
     case .teacher:
       SettingsCard {
